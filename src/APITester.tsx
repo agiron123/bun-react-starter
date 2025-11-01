@@ -4,9 +4,11 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useRef, type FormEvent } from "react";
+import { useAuth } from "@/lib/auth-context";
 
 export function APITester() {
   const responseInputRef = useRef<HTMLTextAreaElement>(null);
+  const { token } = useAuth();
 
   const testEndpoint = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -17,7 +19,12 @@ export function APITester() {
       const endpoint = formData.get("endpoint") as string;
       const url = new URL(endpoint, location.href);
       const method = formData.get("method") as string;
-      const res = await fetch(url, { method });
+      const headers: HeadersInit = {};
+      if (token) {
+        headers.Authorization = `Bearer ${token}`;
+      }
+
+      const res = await fetch(url, { method, headers });
 
       const data = await res.json();
       responseInputRef.current!.value = JSON.stringify(data, null, 2);
