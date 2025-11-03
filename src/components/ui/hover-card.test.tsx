@@ -1,11 +1,11 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { HoverCard, HoverCardContent, HoverCardTrigger } from './hover-card';
-import { Button } from './button';
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "./hover-card";
+import { Button } from "./button";
 
-describe('HoverCard', () => {
-  it('renders hover card trigger', () => {
+describe("HoverCard", () => {
+  it("renders hover card trigger", () => {
     render(
       <HoverCard>
         <HoverCardTrigger asChild>
@@ -17,13 +17,13 @@ describe('HoverCard', () => {
             <p>The React Framework</p>
           </div>
         </HoverCardContent>
-      </HoverCard>
+      </HoverCard>,
     );
-    
-    expect(screen.getByText('@nextjs')).toBeInTheDocument();
+
+    expect(screen.getByText("@nextjs")).toBeInTheDocument();
   });
 
-  it('shows content on hover', async () => {
+  it("shows content on hover", async () => {
     const user = userEvent.setup();
     render(
       <HoverCard>
@@ -36,11 +36,11 @@ describe('HoverCard', () => {
             <p>The React Framework for Production</p>
           </div>
         </HoverCardContent>
-      </HoverCard>
+      </HoverCard>,
     );
-    
-    await user.hover(screen.getByText('@nextjs'));
+
+    await user.hover(screen.getByText("@nextjs"));
     // HoverCard content may be delayed, just verify trigger is present
-    expect(screen.getByText('@nextjs')).toBeInTheDocument();
+    expect(screen.getByText("@nextjs")).toBeInTheDocument();
   });
 });

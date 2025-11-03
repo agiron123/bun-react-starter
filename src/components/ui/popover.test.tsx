@@ -1,15 +1,11 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from './popover';
-import { Button } from './button';
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { Popover, PopoverContent, PopoverTrigger } from "./popover";
+import { Button } from "./button";
 
-describe('Popover', () => {
-  it('renders popover trigger', () => {
+describe("Popover", () => {
+  it("renders popover trigger", () => {
     render(
       <Popover>
         <PopoverTrigger asChild>
@@ -18,13 +14,13 @@ describe('Popover', () => {
         <PopoverContent>
           <p>Popover content</p>
         </PopoverContent>
-      </Popover>
+      </Popover>,
     );
-    
-    expect(screen.getByText('Open Popover')).toBeInTheDocument();
+
+    expect(screen.getByText("Open Popover")).toBeInTheDocument();
   });
 
-  it('opens popover when trigger is clicked', async () => {
+  it("opens popover when trigger is clicked", async () => {
     const user = userEvent.setup();
     render(
       <Popover>
@@ -34,10 +30,10 @@ describe('Popover', () => {
         <PopoverContent>
           <p>Popover content</p>
         </PopoverContent>
-      </Popover>
+      </Popover>,
     );
-    
-    await user.click(screen.getByText('Open Popover'));
-    expect(screen.getByText('Popover content')).toBeInTheDocument();
+
+    await user.click(screen.getByText("Open Popover"));
+    expect(screen.getByText("Popover content")).toBeInTheDocument();
   });
 });

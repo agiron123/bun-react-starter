@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
 import {
   Menubar,
   MenubarContent,
@@ -10,10 +10,10 @@ import {
   MenubarSeparator,
   MenubarTrigger,
   MenubarCheckboxItem,
-} from './menubar';
+} from "./menubar";
 
-describe('Menubar', () => {
-  it('renders menubar with menus', () => {
+describe("Menubar", () => {
+  it("renders menubar with menus", () => {
     render(
       <Menubar>
         <MenubarMenu>
@@ -32,14 +32,14 @@ describe('Menubar', () => {
             <MenubarItem>Redo</MenubarItem>
           </MenubarContent>
         </MenubarMenu>
-      </Menubar>
+      </Menubar>,
     );
-    
-    expect(screen.getByText('File')).toBeInTheDocument();
-    expect(screen.getByText('Edit')).toBeInTheDocument();
+
+    expect(screen.getByText("File")).toBeInTheDocument();
+    expect(screen.getByText("Edit")).toBeInTheDocument();
   });
 
-  it('renders menubar with checkbox items', () => {
+  it("renders menubar with checkbox items", () => {
     render(
       <Menubar>
         <MenubarMenu>
@@ -49,13 +49,13 @@ describe('Menubar', () => {
             <MenubarCheckboxItem>Show Sidebar</MenubarCheckboxItem>
           </MenubarContent>
         </MenubarMenu>
-      </Menubar>
+      </Menubar>,
     );
-    
-    expect(screen.getByText('View')).toBeInTheDocument();
+
+    expect(screen.getByText("View")).toBeInTheDocument();
   });
 
-  it('renders menubar with radio items', () => {
+  it("renders menubar with radio items", () => {
     render(
       <Menubar>
         <MenubarMenu>
@@ -67,9 +67,9 @@ describe('Menubar', () => {
             </MenubarRadioGroup>
           </MenubarContent>
         </MenubarMenu>
-      </Menubar>
+      </Menubar>,
     );
-    
-    expect(screen.getByText('Options')).toBeInTheDocument();
+
+    expect(screen.getByText("Options")).toBeInTheDocument();
   });
 });

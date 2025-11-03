@@ -1,16 +1,16 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuSeparator,
   ContextMenuTrigger,
-} from './context-menu';
+} from "./context-menu";
 
-describe('ContextMenu', () => {
-  it('renders context menu trigger', () => {
+describe("ContextMenu", () => {
+  it("renders context menu trigger", () => {
     render(
       <ContextMenu>
         <ContextMenuTrigger>
@@ -22,13 +22,13 @@ describe('ContextMenu', () => {
           <ContextMenuSeparator />
           <ContextMenuItem>Reload</ContextMenuItem>
         </ContextMenuContent>
-      </ContextMenu>
+      </ContextMenu>,
     );
-    
-    expect(screen.getByText('Right click here')).toBeInTheDocument();
+
+    expect(screen.getByText("Right click here")).toBeInTheDocument();
   });
 
-  it('opens context menu on right click', async () => {
+  it("opens context menu on right click", async () => {
     const user = userEvent.setup();
     render(
       <ContextMenu>
@@ -39,10 +39,10 @@ describe('ContextMenu', () => {
           <ContextMenuItem>Back</ContextMenuItem>
           <ContextMenuItem>Forward</ContextMenuItem>
         </ContextMenuContent>
-      </ContextMenu>
+      </ContextMenu>,
     );
-    
-    await user.pointer({ keys: '[MouseRight]', target: screen.getByText('Right click here') });
+
+    await user.pointer({ keys: "[MouseRight]", target: screen.getByText("Right click here") });
     // Context menu should open
   });
 });

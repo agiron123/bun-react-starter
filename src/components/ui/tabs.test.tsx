@@ -1,10 +1,10 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from './tabs';
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./tabs";
 
-describe('Tabs', () => {
-  it('renders tabs with triggers and content', () => {
+describe("Tabs", () => {
+  it("renders tabs with triggers and content", () => {
     render(
       <Tabs defaultValue="tab1">
         <TabsList>
@@ -13,15 +13,15 @@ describe('Tabs', () => {
         </TabsList>
         <TabsContent value="tab1">Content 1</TabsContent>
         <TabsContent value="tab2">Content 2</TabsContent>
-      </Tabs>
+      </Tabs>,
     );
-    
-    expect(screen.getByText('Tab 1')).toBeInTheDocument();
-    expect(screen.getByText('Tab 2')).toBeInTheDocument();
-    expect(screen.getByText('Content 1')).toBeInTheDocument();
+
+    expect(screen.getByText("Tab 1")).toBeInTheDocument();
+    expect(screen.getByText("Tab 2")).toBeInTheDocument();
+    expect(screen.getByText("Content 1")).toBeInTheDocument();
   });
 
-  it('switches between tabs when clicked', async () => {
+  it("switches between tabs when clicked", async () => {
     const user = userEvent.setup();
     render(
       <Tabs defaultValue="tab1">
@@ -31,10 +31,10 @@ describe('Tabs', () => {
         </TabsList>
         <TabsContent value="tab1">Content 1</TabsContent>
         <TabsContent value="tab2">Content 2</TabsContent>
-      </Tabs>
+      </Tabs>,
     );
-    
-    await user.click(screen.getByText('Tab 2'));
-    expect(screen.getByText('Content 2')).toBeInTheDocument();
+
+    await user.click(screen.getByText("Tab 2"));
+    expect(screen.getByText("Content 2")).toBeInTheDocument();
   });
 });

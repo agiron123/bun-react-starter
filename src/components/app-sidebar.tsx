@@ -58,4 +58,3 @@ export function AppSidebar({ showKitchenSink, onNavigate }: AppSidebarProps) {
     </Sidebar>
   );
 }
-

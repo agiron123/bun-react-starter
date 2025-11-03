@@ -1,11 +1,11 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './collapsible';
-import { Button } from './button';
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./collapsible";
+import { Button } from "./button";
 
-describe('Collapsible', () => {
-  it('renders collapsible with trigger and content', () => {
+describe("Collapsible", () => {
+  it("renders collapsible with trigger and content", () => {
     render(
       <Collapsible>
         <CollapsibleTrigger asChild>
@@ -14,13 +14,13 @@ describe('Collapsible', () => {
         <CollapsibleContent>
           <div>Hidden content</div>
         </CollapsibleContent>
-      </Collapsible>
+      </Collapsible>,
     );
-    
-    expect(screen.getByText('Toggle')).toBeInTheDocument();
+
+    expect(screen.getByText("Toggle")).toBeInTheDocument();
   });
 
-  it('toggles content visibility when trigger is clicked', async () => {
+  it("toggles content visibility when trigger is clicked", async () => {
     const user = userEvent.setup();
     render(
       <Collapsible>
@@ -30,15 +30,15 @@ describe('Collapsible', () => {
         <CollapsibleContent>
           <div>Hidden content</div>
         </CollapsibleContent>
-      </Collapsible>
+      </Collapsible>,
     );
-    
-    const trigger = screen.getByText('Toggle');
+
+    const trigger = screen.getByText("Toggle");
     await user.click(trigger);
     // Content visibility is managed by the component
   });
 
-  it('can be open by default', () => {
+  it("can be open by default", () => {
     render(
       <Collapsible open>
         <CollapsibleTrigger asChild>
@@ -47,9 +47,9 @@ describe('Collapsible', () => {
         <CollapsibleContent>
           <div>Visible content</div>
         </CollapsibleContent>
-      </Collapsible>
+      </Collapsible>,
     );
-    
-    expect(screen.getByText('Visible content')).toBeInTheDocument();
+
+    expect(screen.getByText("Visible content")).toBeInTheDocument();
   });
 });

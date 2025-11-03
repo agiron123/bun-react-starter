@@ -1,11 +1,11 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './tooltip';
-import { Button } from './button';
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip";
+import { Button } from "./button";
 
-describe('Tooltip', () => {
-  it('renders tooltip trigger', () => {
+describe("Tooltip", () => {
+  it("renders tooltip trigger", () => {
     render(
       <TooltipProvider>
         <Tooltip>
@@ -16,13 +16,13 @@ describe('Tooltip', () => {
             <p>Tooltip content</p>
           </TooltipContent>
         </Tooltip>
-      </TooltipProvider>
+      </TooltipProvider>,
     );
-    
-    expect(screen.getByText('Hover me')).toBeInTheDocument();
+
+    expect(screen.getByText("Hover me")).toBeInTheDocument();
   });
 
-  it('shows tooltip on hover', async () => {
+  it("shows tooltip on hover", async () => {
     const user = userEvent.setup();
     render(
       <TooltipProvider>
@@ -34,10 +34,10 @@ describe('Tooltip', () => {
             <p>Tooltip content</p>
           </TooltipContent>
         </Tooltip>
-      </TooltipProvider>
+      </TooltipProvider>,
     );
-    
-    await user.hover(screen.getByText('Hover me'));
+
+    await user.hover(screen.getByText("Hover me"));
     // Note: Tooltip may take time to appear, this is a basic test
   });
 });
