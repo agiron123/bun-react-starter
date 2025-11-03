@@ -1,13 +1,36 @@
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { APITester } from "./APITester";
+import { KitchenSink } from "./KitchenSink";
 import "./index.css";
 
 import logo from "./logo.svg";
 import reactLogo from "./react.svg";
 
 export function App() {
+  const [showKitchenSink, setShowKitchenSink] = useState(false);
+
+  if (showKitchenSink) {
+    return (
+      <div>
+        <div className="fixed top-4 right-4 z-50">
+          <Button onClick={() => setShowKitchenSink(false)} variant="outline">
+            Back to Main App
+          </Button>
+        </div>
+        <KitchenSink />
+      </div>
+    );
+  }
+
   return (
     <div className="container mx-auto p-8 text-center relative z-10">
+      <div className="fixed top-4 right-4 z-50">
+        <Button onClick={() => setShowKitchenSink(true)} variant="outline">
+          View Kitchen Sink
+        </Button>
+      </div>
       <div className="flex justify-center items-center gap-8 mb-8">
         <img
           src={logo}
