@@ -158,13 +158,6 @@ export function KitchenSink() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between px-4">
-          <h1 className="text-2xl font-bold">shadcn/ui Kitchen Sink</h1>
-        </div>
-      </header>
-
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8 space-y-16">
         {/* Introduction Section */}
