@@ -15,28 +15,32 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const DefaultSlider = () => {
+  const [value, setValue] = useState([50]);
+  return (
+    <div className="w-[400px] space-y-2">
+      <Label>Volume: {value[0]}</Label>
+      <Slider value={value} onValueChange={setValue} max={100} step={1} />
+    </div>
+  );
+};
+
 export const Default: Story = {
-  render: () => {
-    const [value, setValue] = useState([50]);
-    return (
-      <div className="w-[400px] space-y-2">
-        <Label>Volume: {value[0]}</Label>
-        <Slider value={value} onValueChange={setValue} max={100} step={1} />
-      </div>
-    );
-  },
+  render: () => <DefaultSlider />,
+};
+
+const RangeSlider = () => {
+  const [value, setValue] = useState([20, 80]);
+  return (
+    <div className="w-[400px] space-y-2">
+      <Label>
+        Range: {value[0]} - {value[1]}
+      </Label>
+      <Slider value={value} onValueChange={setValue} max={100} step={1} />
+    </div>
+  );
 };
 
 export const Range: Story = {
-  render: () => {
-    const [value, setValue] = useState([20, 80]);
-    return (
-      <div className="w-[400px] space-y-2">
-        <Label>
-          Range: {value[0]} - {value[1]}
-        </Label>
-        <Slider value={value} onValueChange={setValue} max={100} step={1} />
-      </div>
-    );
-  },
+  render: () => <RangeSlider />,
 };
