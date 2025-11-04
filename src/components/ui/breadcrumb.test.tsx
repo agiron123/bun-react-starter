@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
 import {
   Breadcrumb,
   BreadcrumbList,
@@ -7,10 +7,10 @@ import {
   BreadcrumbLink,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from './breadcrumb';
+} from "./breadcrumb";
 
-describe('Breadcrumb', () => {
-  it('renders breadcrumb navigation', () => {
+describe("Breadcrumb", () => {
+  it("renders breadcrumb navigation", () => {
     render(
       <Breadcrumb>
         <BreadcrumbList>
@@ -22,14 +22,14 @@ describe('Breadcrumb', () => {
             <BreadcrumbPage>Current</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
-      </Breadcrumb>
+      </Breadcrumb>,
     );
-    
-    expect(screen.getByText('Home')).toBeInTheDocument();
-    expect(screen.getByText('Current')).toBeInTheDocument();
+
+    expect(screen.getByText("Home")).toBeInTheDocument();
+    expect(screen.getByText("Current")).toBeInTheDocument();
   });
 
-  it('renders breadcrumb links correctly', () => {
+  it("renders breadcrumb links correctly", () => {
     render(
       <Breadcrumb>
         <BreadcrumbList>
@@ -37,11 +37,11 @@ describe('Breadcrumb', () => {
             <BreadcrumbLink href="/test">Test Link</BreadcrumbLink>
           </BreadcrumbItem>
         </BreadcrumbList>
-      </Breadcrumb>
+      </Breadcrumb>,
     );
-    
-    const link = screen.getByText('Test Link');
+
+    const link = screen.getByText("Test Link");
     expect(link).toBeInTheDocument();
-    expect(link).toHaveAttribute('href', '/test');
+    expect(link).toHaveAttribute("href", "/test");
   });
 });

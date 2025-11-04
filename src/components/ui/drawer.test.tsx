@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import {
   Drawer,
   DrawerClose,
@@ -10,11 +10,11 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from './drawer';
-import { Button } from './button';
+} from "./drawer";
+import { Button } from "./button";
 
-describe('Drawer', () => {
-  it('renders drawer trigger', () => {
+describe("Drawer", () => {
+  it("renders drawer trigger", () => {
     render(
       <Drawer>
         <DrawerTrigger asChild>
@@ -26,13 +26,13 @@ describe('Drawer', () => {
             <DrawerDescription>Drawer Description</DrawerDescription>
           </DrawerHeader>
         </DrawerContent>
-      </Drawer>
+      </Drawer>,
     );
-    
-    expect(screen.getByText('Open Drawer')).toBeInTheDocument();
+
+    expect(screen.getByText("Open Drawer")).toBeInTheDocument();
   });
 
-  it('opens drawer when trigger is clicked', async () => {
+  it("opens drawer when trigger is clicked", async () => {
     const user = userEvent.setup();
     render(
       <Drawer>
@@ -50,10 +50,10 @@ describe('Drawer', () => {
             </DrawerClose>
           </DrawerFooter>
         </DrawerContent>
-      </Drawer>
+      </Drawer>,
     );
-    
-    await user.click(screen.getByText('Open Drawer'));
-    expect(screen.getByText('Drawer Title')).toBeInTheDocument();
+
+    await user.click(screen.getByText("Open Drawer"));
+    expect(screen.getByText("Drawer Title")).toBeInTheDocument();
   });
 });

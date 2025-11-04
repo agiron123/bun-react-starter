@@ -1,13 +1,13 @@
-import { describe, it, expect, afterEach } from 'vitest';
-import { render, cleanup } from '@testing-library/react';
-import { InputOTP, InputOTPGroup, InputOTPSlot } from './input-otp';
+import { describe, it, expect, afterEach } from "vitest";
+import { render, cleanup } from "@testing-library/react";
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "./input-otp";
 
-describe('InputOTP', () => {
+describe("InputOTP", () => {
   afterEach(() => {
     cleanup();
   });
 
-  it('renders OTP input slots', () => {
+  it("renders OTP input slots", () => {
     const { container } = render(
       <InputOTP maxLength={6}>
         <InputOTPGroup>
@@ -15,14 +15,14 @@ describe('InputOTP', () => {
           <InputOTPSlot index={1} />
           <InputOTPSlot index={2} />
         </InputOTPGroup>
-      </InputOTP>
+      </InputOTP>,
     );
-    
-    const inputs = container.querySelectorAll('input');
+
+    const inputs = container.querySelectorAll("input");
     expect(inputs).toHaveLength(1);
   });
 
-  it('renders with correct max length', () => {
+  it("renders with correct max length", () => {
     const { container } = render(
       <InputOTP maxLength={6}>
         <InputOTPGroup>
@@ -30,10 +30,10 @@ describe('InputOTP', () => {
           <InputOTPSlot index={1} />
           <InputOTPSlot index={2} />
         </InputOTPGroup>
-      </InputOTP>
+      </InputOTP>,
     );
-    
-    const input = container.querySelector('input');
-    expect(input).toHaveAttribute('maxlength', '6');
+
+    const input = container.querySelector("input");
+    expect(input).toHaveAttribute("maxlength", "6");
   });
 });

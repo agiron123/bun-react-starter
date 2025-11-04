@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
@@ -45,7 +52,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -86,7 +99,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import {
   ContextMenu,
@@ -125,7 +138,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
 import { Kbd } from "@/components/ui/kbd";
 import { Empty, EmptyDescription, EmptyTitle } from "@/components/ui/empty";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
@@ -167,7 +185,9 @@ export function KitchenSink() {
         <section id="layout" className="space-y-8">
           <div>
             <h2 className="text-2xl font-semibold mb-2">Layout & Structure</h2>
-            <p className="text-muted-foreground">Components for organizing and structuring your UI</p>
+            <p className="text-muted-foreground">
+              Components for organizing and structuring your UI
+            </p>
           </div>
 
           {/* Card */}
@@ -281,7 +301,9 @@ export function KitchenSink() {
           <Card>
             <CardHeader>
               <CardTitle>Scroll Area</CardTitle>
-              <CardDescription>Customizable scrollable areas with styled scrollbars</CardDescription>
+              <CardDescription>
+                Customizable scrollable areas with styled scrollbars
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <ScrollArea className="h-[200px] w-full border rounded-md p-4">
@@ -373,7 +395,10 @@ export function KitchenSink() {
                             </p>
                           </div>
                         </li>
-                        <NavigationMenuLink href="#" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                        <NavigationMenuLink
+                          href="#"
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        >
                           <div className="text-sm font-medium leading-none">Introduction</div>
                           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                             Re-usable components built using Radix UI and Tailwind CSS.
@@ -386,7 +411,10 @@ export function KitchenSink() {
                     <NavigationMenuTrigger>Components</NavigationMenuTrigger>
                     <NavigationMenuContent>
                       <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                        <NavigationMenuLink href="#" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                        <NavigationMenuLink
+                          href="#"
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        >
                           <div className="text-sm font-medium leading-none">Alert Dialog</div>
                           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                             A modal dialog that interrupts the user.
@@ -463,7 +491,9 @@ export function KitchenSink() {
                     <PaginationPrevious href="#" />
                   </PaginationItem>
                   <PaginationItem>
-                    <PaginationLink href="#" isActive>1</PaginationLink>
+                    <PaginationLink href="#" isActive>
+                      1
+                    </PaginationLink>
                   </PaginationItem>
                   <PaginationItem>
                     <PaginationLink href="#">2</PaginationLink>
@@ -622,7 +652,9 @@ export function KitchenSink() {
               </div>
               <div className="flex items-center space-x-2">
                 <Checkbox id="disabled" disabled />
-                <Label htmlFor="disabled" className="opacity-50">Disabled checkbox</Label>
+                <Label htmlFor="disabled" className="opacity-50">
+                  Disabled checkbox
+                </Label>
               </div>
             </CardContent>
           </Card>
@@ -667,7 +699,9 @@ export function KitchenSink() {
                 <Switch id="notifications" defaultChecked />
               </div>
               <div className="flex items-center justify-between">
-                <Label htmlFor="disabled-switch" className="opacity-50">Disabled</Label>
+                <Label htmlFor="disabled-switch" className="opacity-50">
+                  Disabled
+                </Label>
                 <Switch id="disabled-switch" disabled />
               </div>
             </CardContent>
@@ -685,7 +719,9 @@ export function KitchenSink() {
                 <Slider value={sliderValue} onValueChange={setSliderValue} max={100} step={1} />
               </div>
               <div className="space-y-2">
-                <Label>Range: {rangeValue[0]} - {rangeValue[1]}</Label>
+                <Label>
+                  Range: {rangeValue[0]} - {rangeValue[1]}
+                </Label>
                 <Slider value={rangeValue} onValueChange={setRangeValue} max={100} step={1} />
               </div>
             </CardContent>
@@ -698,7 +734,12 @@ export function KitchenSink() {
               <CardDescription>Date picker calendar</CardDescription>
             </CardHeader>
             <CardContent>
-              <Calendar mode="single" selected={date} onSelect={setDate} className="rounded-md border" />
+              <Calendar
+                mode="single"
+                selected={date}
+                onSelect={setDate}
+                className="rounded-md border"
+              />
             </CardContent>
           </Card>
         </section>
@@ -732,7 +773,9 @@ export function KitchenSink() {
               </div>
               <div className="flex flex-wrap gap-2">
                 <Button disabled>Disabled</Button>
-                <Button variant="outline" disabled>Disabled Outline</Button>
+                <Button variant="outline" disabled>
+                  Disabled Outline
+                </Button>
               </div>
             </CardContent>
           </Card>
@@ -818,7 +861,9 @@ export function KitchenSink() {
                   </DialogHeader>
                   <div className="grid gap-4 py-4">
                     <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="name" className="text-right">Name</Label>
+                      <Label htmlFor="name" className="text-right">
+                        Name
+                      </Label>
                       <Input id="name" defaultValue="John Doe" className="col-span-3" />
                     </div>
                   </div>
@@ -877,7 +922,9 @@ export function KitchenSink() {
                   </SheetHeader>
                   <div className="grid gap-4 py-4">
                     <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="sheet-name" className="text-right">Name</Label>
+                      <Label htmlFor="sheet-name" className="text-right">
+                        Name
+                      </Label>
                       <Input id="sheet-name" defaultValue="John Doe" className="col-span-3" />
                     </div>
                   </div>
@@ -949,9 +996,7 @@ export function KitchenSink() {
                   <div className="flex justify-between space-x-4">
                     <div className="space-y-1">
                       <h4 className="text-sm font-semibold">@nextjs</h4>
-                      <p className="text-sm">
-                        The React Framework for Production
-                      </p>
+                      <p className="text-sm">The React Framework for Production</p>
                     </div>
                   </div>
                 </HoverCardContent>
@@ -1209,20 +1254,13 @@ export function KitchenSink() {
                   </CollapsibleTrigger>
                 </div>
                 <CollapsibleContent className="space-y-2">
-                  <div className="rounded-md border px-4 py-2 text-sm">
-                    @radix-ui/primitives
-                  </div>
-                  <div className="rounded-md border px-4 py-2 text-sm">
-                    @radix-ui/colors
-                  </div>
-                  <div className="rounded-md border px-4 py-2 text-sm">
-                    @stitches/react
-                  </div>
+                  <div className="rounded-md border px-4 py-2 text-sm">@radix-ui/primitives</div>
+                  <div className="rounded-md border px-4 py-2 text-sm">@radix-ui/colors</div>
+                  <div className="rounded-md border px-4 py-2 text-sm">@stitches/react</div>
                 </CollapsibleContent>
               </Collapsible>
             </CardContent>
           </Card>
-
         </section>
 
         {/* Notifications */}
@@ -1239,10 +1277,7 @@ export function KitchenSink() {
               <CardDescription>Toast notifications</CardDescription>
             </CardHeader>
             <CardContent>
-              <Button
-                variant="outline"
-                onClick={() => toast("Event has been created")}
-              >
+              <Button variant="outline" onClick={() => toast("Event has been created")}>
                 Show Toast
               </Button>
             </CardContent>
@@ -1253,4 +1288,3 @@ export function KitchenSink() {
     </div>
   );
 }
-

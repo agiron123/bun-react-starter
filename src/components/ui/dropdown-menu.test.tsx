@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,11 +8,11 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from './dropdown-menu';
-import { Button } from './button';
+} from "./dropdown-menu";
+import { Button } from "./button";
 
-describe('DropdownMenu', () => {
-  it('renders dropdown menu trigger', () => {
+describe("DropdownMenu", () => {
+  it("renders dropdown menu trigger", () => {
     render(
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -24,13 +24,13 @@ describe('DropdownMenu', () => {
           <DropdownMenuItem>Profile</DropdownMenuItem>
           <DropdownMenuItem>Settings</DropdownMenuItem>
         </DropdownMenuContent>
-      </DropdownMenu>
+      </DropdownMenu>,
     );
-    
-    expect(screen.getByText('Open Menu')).toBeInTheDocument();
+
+    expect(screen.getByText("Open Menu")).toBeInTheDocument();
   });
 
-  it('opens dropdown menu when trigger is clicked', async () => {
+  it("opens dropdown menu when trigger is clicked", async () => {
     const user = userEvent.setup();
     render(
       <DropdownMenu>
@@ -41,11 +41,11 @@ describe('DropdownMenu', () => {
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuItem>Profile</DropdownMenuItem>
         </DropdownMenuContent>
-      </DropdownMenu>
+      </DropdownMenu>,
     );
-    
-    await user.click(screen.getByText('Open Menu'));
-    expect(screen.getByText('My Account')).toBeInTheDocument();
-    expect(screen.getByText('Profile')).toBeInTheDocument();
+
+    await user.click(screen.getByText("Open Menu"));
+    expect(screen.getByText("My Account")).toBeInTheDocument();
+    expect(screen.getByText("Profile")).toBeInTheDocument();
   });
 });

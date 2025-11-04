@@ -1,6 +1,5 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
 import {
   Command,
   CommandEmpty,
@@ -8,11 +7,10 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator,
-} from './command';
+} from "./command";
 
-describe('Command', () => {
-  it('renders command palette', () => {
+describe("Command", () => {
+  it("renders command palette", () => {
     render(
       <Command>
         <CommandInput placeholder="Type a command..." />
@@ -23,13 +21,13 @@ describe('Command', () => {
             <CommandItem>Search</CommandItem>
           </CommandGroup>
         </CommandList>
-      </Command>
+      </Command>,
     );
-    
-    expect(screen.getByPlaceholderText('Type a command...')).toBeInTheDocument();
+
+    expect(screen.getByPlaceholderText("Type a command...")).toBeInTheDocument();
   });
 
-  it('displays command items', () => {
+  it("displays command items", () => {
     render(
       <Command>
         <CommandInput placeholder="Type a command..." />
@@ -40,26 +38,25 @@ describe('Command', () => {
             <CommandItem>Calculator</CommandItem>
           </CommandGroup>
         </CommandList>
-      </Command>
+      </Command>,
     );
-    
-    expect(screen.getByText('Calendar')).toBeInTheDocument();
-    expect(screen.getByText('Search Emoji')).toBeInTheDocument();
-    expect(screen.getByText('Calculator')).toBeInTheDocument();
+
+    expect(screen.getByText("Calendar")).toBeInTheDocument();
+    expect(screen.getByText("Search Emoji")).toBeInTheDocument();
+    expect(screen.getByText("Calculator")).toBeInTheDocument();
   });
 
-  it('shows empty state when no results', () => {
+  it("shows empty state when no results", () => {
     render(
       <Command>
         <CommandInput placeholder="Type a command..." />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
-          <CommandGroup heading="Suggestions">
-          </CommandGroup>
+          <CommandGroup heading="Suggestions"></CommandGroup>
         </CommandList>
-      </Command>
+      </Command>,
     );
-    
-    expect(screen.getByText('No results found.')).toBeInTheDocument();
+
+    expect(screen.getByText("No results found.")).toBeInTheDocument();
   });
 });

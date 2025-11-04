@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import {
   Dialog,
   DialogContent,
@@ -8,11 +8,11 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from './dialog';
-import { Button } from './button';
+} from "./dialog";
+import { Button } from "./button";
 
-describe('Dialog', () => {
-  it('renders dialog trigger', () => {
+describe("Dialog", () => {
+  it("renders dialog trigger", () => {
     render(
       <Dialog>
         <DialogTrigger asChild>
@@ -24,13 +24,13 @@ describe('Dialog', () => {
             <DialogDescription>Dialog Description</DialogDescription>
           </DialogHeader>
         </DialogContent>
-      </Dialog>
+      </Dialog>,
     );
-    
-    expect(screen.getByText('Open Dialog')).toBeInTheDocument();
+
+    expect(screen.getByText("Open Dialog")).toBeInTheDocument();
   });
 
-  it('opens dialog when trigger is clicked', async () => {
+  it("opens dialog when trigger is clicked", async () => {
     const user = userEvent.setup();
     render(
       <Dialog>
@@ -43,11 +43,11 @@ describe('Dialog', () => {
             <DialogDescription>Dialog Description</DialogDescription>
           </DialogHeader>
         </DialogContent>
-      </Dialog>
+      </Dialog>,
     );
-    
-    await user.click(screen.getByText('Open Dialog'));
-    expect(screen.getByText('Dialog Title')).toBeInTheDocument();
-    expect(screen.getByText('Dialog Description')).toBeInTheDocument();
+
+    await user.click(screen.getByText("Open Dialog"));
+    expect(screen.getByText("Dialog Title")).toBeInTheDocument();
+    expect(screen.getByText("Dialog Description")).toBeInTheDocument();
   });
 });

@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -7,10 +7,10 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-} from './navigation-menu';
+} from "./navigation-menu";
 
-describe('NavigationMenu', () => {
-  it('renders navigation menu', () => {
+describe("NavigationMenu", () => {
+  it("renders navigation menu", () => {
     render(
       <NavigationMenu>
         <NavigationMenuList>
@@ -25,13 +25,13 @@ describe('NavigationMenu', () => {
             </NavigationMenuContent>
           </NavigationMenuItem>
         </NavigationMenuList>
-      </NavigationMenu>
+      </NavigationMenu>,
     );
-    
-    expect(screen.getByText('Getting Started')).toBeInTheDocument();
+
+    expect(screen.getByText("Getting Started")).toBeInTheDocument();
   });
 
-  it('renders navigation menu with links', () => {
+  it("renders navigation menu with links", () => {
     render(
       <NavigationMenu>
         <NavigationMenuList>
@@ -39,10 +39,10 @@ describe('NavigationMenu', () => {
             <NavigationMenuLink href="/docs">Documentation</NavigationMenuLink>
           </NavigationMenuItem>
         </NavigationMenuList>
-      </NavigationMenu>
+      </NavigationMenu>,
     );
-    
-    const link = screen.getByText('Documentation');
+
+    const link = screen.getByText("Documentation");
     expect(link).toBeInTheDocument();
   });
 });

@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
 import {
   Pagination,
   PaginationContent,
@@ -8,10 +8,10 @@ import {
   PaginationNext,
   PaginationPrevious,
   PaginationEllipsis,
-} from './pagination';
+} from "./pagination";
 
-describe('Pagination', () => {
-  it('renders pagination with links', () => {
+describe("Pagination", () => {
+  it("renders pagination with links", () => {
     render(
       <Pagination>
         <PaginationContent>
@@ -25,13 +25,13 @@ describe('Pagination', () => {
             <PaginationNext href="#" />
           </PaginationItem>
         </PaginationContent>
-      </Pagination>
+      </Pagination>,
     );
-    
-    expect(screen.getByText('1')).toBeInTheDocument();
+
+    expect(screen.getByText("1")).toBeInTheDocument();
   });
 
-  it('renders pagination ellipsis', () => {
+  it("renders pagination ellipsis", () => {
     const { container } = render(
       <Pagination>
         <PaginationContent>
@@ -39,9 +39,9 @@ describe('Pagination', () => {
             <PaginationEllipsis />
           </PaginationItem>
         </PaginationContent>
-      </Pagination>
+      </Pagination>,
     );
-    
-    expect(container.querySelector('svg')).toBeInTheDocument();
+
+    expect(container.querySelector("svg")).toBeInTheDocument();
   });
 });

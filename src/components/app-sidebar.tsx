@@ -13,10 +13,10 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 
-type AppSidebarProps = {
+interface AppSidebarProps {
   showKitchenSink: boolean;
   onNavigate: (view: "home" | "kitchen-sink") => void;
-};
+}
 
 export function AppSidebar({ showKitchenSink, onNavigate }: AppSidebarProps) {
   const items = [
@@ -58,4 +58,3 @@ export function AppSidebar({ showKitchenSink, onNavigate }: AppSidebarProps) {
     </Sidebar>
   );
 }
-
