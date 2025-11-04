@@ -6,6 +6,7 @@ out
 dist
 *.tgz
 build
+storybook-static
 
 # Bun specific
 .bun
