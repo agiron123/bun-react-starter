@@ -123,15 +123,6 @@ export function APITester() {
       <Label htmlFor="method" className="sr-only">
         Wordle
       </Label>
-
-      {/* {
-          gameId.length > 0 && (
-            <Label htmlFor="endpoint" className="sr-only">
-              {gameId}
-            </Label>
-          )
-        } */}
-
       <Input
         id="guessInput"
         type="text"
