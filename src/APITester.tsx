@@ -5,7 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useRef, useState } from "react";
 
 
-const API_URL = 'https://1b8ecb7eadb9.ngrok.app/graphql'
+const API_URL = 'https://hypothecary-unfulminated-rayden.ngrok-free.dev/graphql'
 
 export function APITester() {
   const [gameId, setGameId] = useState('')
@@ -13,6 +13,7 @@ export function APITester() {
   const [guessesRemaining, setGuessesRemaining] = useState(-1)
   const [guesses, setGuesses] = useState([])
   const [guessInputText, setGuessInputText] = useState('')
+  const [error, setError] = useState('')
 
   /*
   mutation BeginGame {
@@ -63,9 +64,6 @@ export function APITester() {
     }
   }
 
-
-  const responseInputRef = useRef<HTMLTextAreaElement>(null);
-
   const makeGuess = async (event) => {
     event.preventDefault();
 
@@ -73,8 +71,8 @@ export function APITester() {
       const mutation = `
         mutation GuessWord {
           makeGuess(
-            candidate: {candidate: ${guessInputText}}
-            gameId: ${gameId}
+            candidate: {candidate: "${guessInputText}"}
+            gameId: "${gameId}"
           ) {
             __typename ...on Game {
               gameId
@@ -100,9 +98,19 @@ export function APITester() {
       })
 
       const guessResponseJSON = await guessResponse.json()
-      console.log('guessResponse: ', guessResponseJSON)
+      console.log('guessResponse: ', JSON.stringify(guessResponseJSON))
+
+      if (guessResponseJSON.errors) {
+        throw new Error(guessResponseJSON.errors[0].message)
+      }
+      setGuesses(guessResponseJSON.data.makeGuess.guesses)
     } catch (error) {
-      responseInputRef.current!.value = String(error);
+      if (error instanceof Error) {
+        console.log('error making guess: ', error)
+        setError(error.message)
+      } else {
+        setError('Unable to contact server')
+      }
     }
   };
 
@@ -112,7 +120,6 @@ export function APITester() {
 
   return (
     <div className="flex flex-col gap-6">
-
       <div>
         Game ID: {gameId}
       </div>
@@ -131,19 +138,47 @@ export function APITester() {
         onChange={onInputChanged}
         value={guessInputText}
       />
+      {
+        error.length > 0 && (
+          <p className="text-red-500">Error: {error}</p>
+        )
+      }
+
       <Button onClick={makeGuess} variant="secondary">
         Make Guess
       </Button>
-      <Label htmlFor="response" className="sr-only">
-        Response
-      </Label>
-      <Textarea
-        ref={responseInputRef}
-        id="response"
-        readOnly
-        placeholder="Response will appear here..."
-        className="min-h-[140px] font-mono resize-y"
-      />
+
+      {
+        guesses.length > 0 && (
+          <div>
+            {
+              guesses.map((guess, index) => {
+                return (<div key={`${guess.candidate}-${index}`} className="flex flex-row">
+                  {
+                    guess.letterMatches.map((letterMatch, index) => {
+                      let borderColor = ""
+
+                      if (letterMatch === 'CORRECT_LETTER_INCORRECT_POSITION') {
+                        borderColor = 'border-yellow-500'
+                      } else if (letterMatch === 'CORRECT_LETTER_AND_POSITION') {
+                        borderColor = 'border-green-500'
+                      }
+
+                      return (
+                        <div key={`${letterMatch}-${index}`} className={`flex text-3xl rounded border-2 w-36 h-36 center align-center justify-center ${borderColor}`}>
+                          {guess.candidate[index]}
+                        </div>
+                      )
+                    })
+                  }</div>)
+              })
+            }
+          </div>
+        )
+      }
+
+
+
     </div>
   );
 }
