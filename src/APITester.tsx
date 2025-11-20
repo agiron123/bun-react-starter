@@ -1,184 +1,76 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { useRef, useState } from "react";
-
-
-const API_URL = 'https://hypothecary-unfulminated-rayden.ngrok-free.dev/graphql'
+import { useRef, type FormEvent } from "react";
 
 export function APITester() {
-  const [gameId, setGameId] = useState('')
-  const [gameStatus, setGameStatus] = useState('')
-  const [guessesRemaining, setGuessesRemaining] = useState(-1)
-  const [guesses, setGuesses] = useState([])
-  const [guessInputText, setGuessInputText] = useState('')
-  const [error, setError] = useState('')
+  const responseInputRef = useRef<HTMLTextAreaElement>(null);
 
-  /*
-  mutation BeginGame {
-    beginGame {
-      gameId
-      guessesRemaining
-      gameStatus
-      guesses {
-        candidate
-        letterMatches
-      }
-    }
-  }
-  */
-
-  async function beginGame() {
-    if (!gameId) {
-      const beginGameResponse = await fetch(API_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          query: `
-          mutation BeginGame {
-          beginGame {
-            gameId
-            guessesRemaining
-            gameStatus
-            guesses {
-              candidate
-              letterMatches
-            }
-          }
-        }`
-        })
-      })
-
-      const beginGameResponseJSON = await beginGameResponse.json()
-      const data = beginGameResponseJSON.data.beginGame
-      console.log('gameId: ', data.gameId)
-      setGameId(data.gameId)
-      setGameStatus(data.gameStatus)
-      setGuesses(data.guesses)
-      setGuessesRemaining(data.guessesRemaining)
-
-      console.log('beginGameResponse: ', beginGameResponseJSON)
-    }
-  }
-
-  const makeGuess = async (event) => {
-    event.preventDefault();
+  const testEndpoint = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
     try {
-      const mutation = `
-        mutation GuessWord {
-          makeGuess(
-            candidate: {candidate: "${guessInputText}"}
-            gameId: "${gameId}"
-          ) {
-            __typename ...on Game {
-              gameId
-              gameStatus
-              guesses {
-                candidate
-                letterMatches
-              }
-              guessesRemaining
-            }
-          }
-        }
-      `
+      const form = e.currentTarget;
+      const formData = new FormData(form);
+      const endpoint = formData.get("endpoint") as string;
+      const url = new URL(endpoint, location.href);
+      const method = formData.get("method") as string;
+      const res = await fetch(url, { method });
 
-      const requestBody = JSON.stringify({ query: mutation })
-      console.log('body: ', requestBody)
-      const guessResponse = await fetch(API_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: requestBody
-      })
-
-      const guessResponseJSON = await guessResponse.json()
-      console.log('guessResponse: ', JSON.stringify(guessResponseJSON))
-
-      if (guessResponseJSON.errors) {
-        throw new Error(guessResponseJSON.errors[0].message)
-      }
-      setGuesses(guessResponseJSON.data.makeGuess.guesses)
+      const data = await res.json();
+      responseInputRef.current!.value = JSON.stringify(data, null, 2);
     } catch (error) {
-      if (error instanceof Error) {
-        console.log('error making guess: ', error)
-        setError(error.message)
-      } else {
-        setError('Unable to contact server')
-      }
+      responseInputRef.current!.value = String(error);
     }
   };
 
-  function onInputChanged(event) {
-    setGuessInputText(event.target.value)
-  }
-
   return (
     <div className="flex flex-col gap-6">
-      <div>
-        Game ID: {gameId}
-      </div>
-      <Button onClick={beginGame} variant="secondary">
-        {gameId ? 'End Game' : "Begin Game"}
-      </Button>
-
-      <Label htmlFor="method" className="sr-only">
-        Wordle
+      <form onSubmit={testEndpoint} className="flex items-center gap-2">
+        <Label htmlFor="method" className="sr-only">
+          Method
+        </Label>
+        <Select name="method" defaultValue="GET">
+          <SelectTrigger className="w-[100px]" id="method">
+            <SelectValue placeholder="Method" />
+          </SelectTrigger>
+          <SelectContent align="start">
+            <SelectItem value="GET">GET</SelectItem>
+            <SelectItem value="PUT">PUT</SelectItem>
+          </SelectContent>
+        </Select>
+        <Label htmlFor="endpoint" className="sr-only">
+          Endpoint
+        </Label>
+        <Input
+          id="endpoint"
+          type="text"
+          name="endpoint"
+          defaultValue="/api/hello"
+          placeholder="/api/hello"
+        />
+        <Button type="submit" variant="secondary">
+          Send
+        </Button>
+      </form>
+      <Label htmlFor="response" className="sr-only">
+        Response
       </Label>
-      <Input
-        id="guessInput"
-        type="text"
-        name="guessInput"
-        placeholder="guess"
-        onChange={onInputChanged}
-        value={guessInputText}
+      <Textarea
+        ref={responseInputRef}
+        id="response"
+        readOnly
+        placeholder="Response will appear here..."
+        className="min-h-[140px] font-mono resize-y"
       />
-      {
-        error.length > 0 && (
-          <p className="text-red-500">Error: {error}</p>
-        )
-      }
-
-      <Button onClick={makeGuess} variant="secondary">
-        Make Guess
-      </Button>
-
-      {
-        guesses.length > 0 && (
-          <div>
-            {
-              guesses.map((guess, index) => {
-                return (<div key={`${guess.candidate}-${index}`} className="flex flex-row">
-                  {
-                    guess.letterMatches.map((letterMatch, index) => {
-                      let borderColor = ""
-
-                      if (letterMatch === 'CORRECT_LETTER_INCORRECT_POSITION') {
-                        borderColor = 'border-yellow-500'
-                      } else if (letterMatch === 'CORRECT_LETTER_AND_POSITION') {
-                        borderColor = 'border-green-500'
-                      }
-
-                      return (
-                        <div key={`${letterMatch}-${index}`} className={`flex text-3xl rounded border-2 w-36 h-36 center align-center justify-center ${borderColor}`}>
-                          {guess.candidate[index]}
-                        </div>
-                      )
-                    })
-                  }</div>)
-              })
-            }
-          </div>
-        )
-      }
-
-
-
     </div>
   );
 }
