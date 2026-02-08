@@ -1,0 +1,75 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Introduction" />
+
+# Welcome to bun-react-starter Storybook
+
+This Storybook showcases the UI components from this project, which uses:
+
+- **React 19** - Latest React framework
+- **Tailwind CSS v4** - Utility-first CSS framework
+- **shadcn/ui** - Beautiful, accessible components built with Radix UI
+- **TypeScript** - Type-safe development
+- **Bun** - Fast JavaScript runtime and package manager
+
+## What's in this Storybook?
+
+Browse through the **UI** category in the sidebar to see all available shadcn/ui components with:
+
+- Live interactive examples
+- Component props and variants
+- Accessibility features
+- Code snippets
+
+## Component Categories
+
+### UI Components
+All shadcn/ui components are available under the **UI/** category, including:
+- Button, Badge, Card
+- Input, Textarea, Select
+- Dialog, Sheet, Popover
+- Accordion, Tabs, Collapsible
+- And many more...
+
+## Getting Started
+
+To add a new story for a component:
+
+1. Create a `.stories.tsx` file next to your component
+2. Import the component and Meta/StoryObj types
+3. Define your stories with different variants and states
+
+Example:
+```tsx
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { MyComponent } from "./my-component";
+
+const meta = {
+  title: "UI/MyComponent",
+  component: MyComponent,
+  parameters: {
+    layout: "centered",
+  },
+  tags: ["autodocs"],
+} satisfies Meta<typeof MyComponent>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+  args: {
+    // your props here
+  },
+};
+```
+
+## Running Storybook
+
+- Development: `npm run storybook`
+- Build: `npm run build-storybook`
+
+## Learn More
+
+- [Storybook Documentation](https://storybook.js.org/)
+- [shadcn/ui Documentation](https://ui.shadcn.com/)
+- [Tailwind CSS Documentation](https://tailwindcss.com/)
