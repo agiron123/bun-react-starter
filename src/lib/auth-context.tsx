@@ -1,28 +1,33 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 
-export type AuthUser = {
+export interface AuthUser {
   id: number;
   email: string;
   createdAt: string;
-};
+}
 
-type AuthContextValue = {
+interface AuthContextValue {
   user: AuthUser | null;
   token: string | null;
   isAuthenticated: boolean;
   loading: boolean;
   login: (args: { email: string; password: string }) => Promise<void>;
+  register: (args: { email: string; password: string }) => Promise<void>;
   logout: () => void;
-};
+  resetPassword: (args: {
+    currentPassword: string;
+    newPassword: string;
+  }) => Promise<void>;
+}
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 const AUTH_STORAGE_KEY = "auth.session";
 
-type StoredAuth = {
+interface StoredAuth {
   user: AuthUser;
   token: string;
-};
+}
 
 function getStoredAuth(): StoredAuth | null {
   if (typeof window === "undefined") {
@@ -99,11 +104,80 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     persistAuth({ user: data.user, token: data.token });
   }, [persistAuth]);
 
+  const register = useCallback(async ({ email, password }: { email: string; password: string }) => {
+    const response = await fetch("/api/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (!response.ok) {
+      let message = "Unable to create account.";
+      try {
+        const data = (await response.json()) as { message?: string };
+        if (data?.message) {
+          message = data.message;
+        }
+      } catch (error) {
+        console.warn("Failed to parse register error response", error);
+      }
+      throw new Error(message);
+    }
+
+    const data = (await response.json()) as { token: string; user: AuthUser };
+
+    setUser(data.user);
+    setToken(data.token);
+    persistAuth({ user: data.user, token: data.token });
+  }, [persistAuth]);
+
   const logout = useCallback(() => {
     setUser(null);
     setToken(null);
     persistAuth(null);
   }, [persistAuth]);
+
+  const resetPassword = useCallback(
+    async ({
+      currentPassword,
+      newPassword,
+    }: {
+      currentPassword: string;
+      newPassword: string;
+    }) => {
+      if (!token) {
+        throw new Error("Not authenticated.");
+      }
+
+      const response = await fetch("/api/auth/reset-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          currentPassword,
+          newPassword,
+        }),
+      });
+
+      if (!response.ok) {
+        let message = "Unable to reset password.";
+        try {
+          const data = (await response.json()) as { message?: string };
+          if (data?.message) {
+            message = data.message;
+          }
+        } catch (err) {
+          console.warn("Failed to parse reset-password error response", err);
+        }
+        throw new Error(message);
+      }
+    },
+    [token]
+  );
 
   const value = useMemo<AuthContextValue>(
     () => ({
@@ -112,9 +186,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       isAuthenticated: Boolean(user && token),
       loading,
       login,
+      register,
       logout,
+      resetPassword,
     }),
-    [loading, login, logout, token, user]
+    [loading, login, logout, register, resetPassword, token, user]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

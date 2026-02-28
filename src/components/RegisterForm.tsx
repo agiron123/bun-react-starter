@@ -8,15 +8,20 @@ import { useAuth } from "@/lib/auth-context";
 interface FormState {
   email: string;
   password: string;
+  confirmPassword: string;
 }
 
-interface LoginFormProps {
-  onSwitchToRegister?: () => void;
+interface RegisterFormProps {
+  onSwitchToLogin?: () => void;
 }
 
-export function LoginForm({ onSwitchToRegister }: LoginFormProps) {
-  const { login } = useAuth();
-  const [formState, setFormState] = useState<FormState>({ email: "", password: "" });
+export function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
+  const { register: registerUser } = useAuth();
+  const [formState, setFormState] = useState<FormState>({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -31,17 +36,28 @@ export function LoginForm({ onSwitchToRegister }: LoginFormProps) {
 
     const email = formState.email.trim();
     const password = formState.password;
+    const confirmPassword = formState.confirmPassword;
 
-    if (!email || !password) {
-      setError("Both email and password are required.");
+    if (!email || !password || !confirmPassword) {
+      setError("All fields are required.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters long.");
       return;
     }
 
     setIsSubmitting(true);
     try {
-      await login({ email, password });
+      await registerUser({ email, password });
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Login failed. Please try again.");
+      setError(err instanceof Error ? err.message : "Registration failed. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -50,8 +66,8 @@ export function LoginForm({ onSwitchToRegister }: LoginFormProps) {
   return (
     <Card className="max-w-md w-full mx-auto">
       <CardHeader>
-        <CardTitle>Welcome back</CardTitle>
-        <CardDescription>Sign in with your email to continue.</CardDescription>
+        <CardTitle>Create an account</CardTitle>
+        <CardDescription>Enter your email to sign up.</CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="flex flex-col gap-6">
@@ -74,25 +90,39 @@ export function LoginForm({ onSwitchToRegister }: LoginFormProps) {
               id="password"
               name="password"
               type="password"
-              autoComplete="current-password"
+              autoComplete="new-password"
+              placeholder="At least 8 characters"
               value={formState.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="confirmPassword">Confirm password</Label>
+            <Input
+              id="confirmPassword"
+              name="confirmPassword"
+              type="password"
+              autoComplete="new-password"
+              placeholder="Repeat your password"
+              value={formState.confirmPassword}
               onChange={handleChange}
               required
             />
           </div>
           {error ? <p className="text-sm text-red-600" role="alert">{error}</p> : null}
           <Button type="submit" disabled={isSubmitting} className="w-full">
-            {isSubmitting ? "Signing in..." : "Sign in"}
+            {isSubmitting ? "Creating account..." : "Create account"}
           </Button>
-          {onSwitchToRegister ? (
+          {onSwitchToLogin ? (
             <p className="text-center text-sm text-muted-foreground">
-              Don&apos;t have an account?{" "}
+              Already have an account?{" "}
               <button
                 type="button"
-                onClick={onSwitchToRegister}
+                onClick={onSwitchToLogin}
                 className="underline underline-offset-4 hover:text-primary"
               >
-                Create one
+                Sign in
               </button>
             </p>
           ) : null}
@@ -102,4 +132,4 @@ export function LoginForm({ onSwitchToRegister }: LoginFormProps) {
   );
 }
 
-export default LoginForm;
+export default RegisterForm;

@@ -13,12 +13,12 @@ const FALLBACK_SECRET = "change-me-in-production";
 
 const secret = JWT_SECRET ?? FALLBACK_SECRET;
 
-export type AuthTokenPayload = {
+export interface AuthTokenPayload {
   sub: string;
   email: string;
   iat?: number;
   exp?: number;
-};
+}
 
 export async function hashPassword(password: string): Promise<string> {
   const salt = await bcrypt.genSalt(10);
