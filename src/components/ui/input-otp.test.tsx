@@ -1,10 +1,16 @@
-import { describe, it, expect, afterEach } from "vitest";
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { render, cleanup } from "@testing-library/react";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "./input-otp";
 
 describe("InputOTP", () => {
-  afterEach(() => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+
+  afterEach(async () => {
+    await vi.runOnlyPendingTimersAsync();
     cleanup();
+    vi.useRealTimers();
   });
 
   it("renders OTP input slots", () => {
