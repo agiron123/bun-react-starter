@@ -1,0 +1,20 @@
+{
+  "name": "@repo/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun --hot src/index.tsx",
+    "start": "NODE_ENV=production bun src/index.tsx",
+    "lint": "bunx eslint ."
+  },
+  "dependencies": {
+    "@repo/auth": "workspace:*",
+    "@repo/database": "workspace:*"
+  },
+  "devDependencies": {
+    "@repo/config-typescript": "workspace:*",
+    "@types/bun": "latest",
+    "typescript": "^5.9.3"
+  }
+}

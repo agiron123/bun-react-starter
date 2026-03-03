@@ -1,0 +1,28 @@
+{
+  "name": "@repo/auth",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./server": "./src/server.ts",
+    "./middleware": "./src/server-middleware.ts",
+    "./client": "./src/client.tsx"
+  },
+  "scripts": {
+    "lint": "bunx eslint ."
+  },
+  "dependencies": {
+    "@repo/database": "workspace:*",
+    "bcryptjs": "^3.0.2",
+    "jsonwebtoken": "^9.0.2",
+    "react": "^19"
+  },
+  "devDependencies": {
+    "@repo/config-typescript": "workspace:*",
+    "@types/bcryptjs": "^3.0.0",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/bun": "latest",
+    "@types/react": "^19",
+    "typescript": "^5.9.3"
+  }
+}
