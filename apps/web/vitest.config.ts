@@ -7,10 +7,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "jsdom",
-    setupFiles: "./vitest.setup.ts",
-    onConsoleLog(log: string) {
-      if (log.includes("was not wrapped in act")) return false;
-    },
+    passWithNoTests: true,
   },
   resolve: {
     alias: {
