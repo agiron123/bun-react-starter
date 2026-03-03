@@ -1,4 +1,5 @@
-$ bun run build.ts
+
+[0m[2m[35m$[0m [2m[1mbun run build.ts[0m
 
 🚀 Starting build process...
 
@@ -6,7 +7,7 @@ $ bun run build.ts
 📄 Found 1 HTML file to process
 
 ┌───┬────────────────────────────┬─────────────┬───────────┐
-│   │ File                       │ Type        │ Size      │
+│ [0m[1m [0m │ [0m[1mFile[0m                       │ [0m[1mType[0m        │ [0m[1mSize[0m      │
 ├───┼────────────────────────────┼─────────────┼───────────┤
 │ 0 │ dist/chunk-3gnat42d.js     │ entry-point │ 751.10 KB │
 │ 1 │ dist/index.html            │ entry-point │ 451.00 B  │
@@ -16,5 +17,5 @@ $ bun run build.ts
 │ 5 │ dist/react-c5c0zhye.svg    │ asset       │ 338.00 B  │
 └───┴────────────────────────────┴─────────────┴───────────┘
 
-✅ Build completed in 297.78ms
+✅ Build completed in 566.32ms
 

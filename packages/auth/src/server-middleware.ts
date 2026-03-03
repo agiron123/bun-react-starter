@@ -24,7 +24,7 @@ export async function authenticateRequest(request: Request): Promise<Authenticat
   let payload: { sub: string; email: string };
   try {
     payload = verifyAuthToken(token);
-  } catch (error) {
+  } catch {
     throw new UnauthorizedError("Invalid or expired token");
   }
 

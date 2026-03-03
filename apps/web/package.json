@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "bun run build.ts",
-    "lint": "bunx eslint .",
+    "lint": "bunx eslint src build.ts",
     "test": "vitest run",
     "test:watch": "vitest"
   },

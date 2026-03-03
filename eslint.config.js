@@ -8,7 +8,7 @@ import prettierConfig from "eslint-config-prettier";
 
 export default tseslint.config(
   {
-    ignores: ["dist", "bun.lockb", "eslint.config.js", "prettier.config.js", "**/*.d.ts"],
+    ignores: ["**/dist/**", "dist", "bun.lockb", "eslint.config.js", "prettier.config.js", "**/*.d.ts"],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
