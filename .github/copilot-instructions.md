@@ -1,29 +1,44 @@
 # Copilot Instructions for bun-react-starter
 
-This repository is a Bun + React + TypeScript starter template using Tailwind CSS and Shadcn UI components.
+This repository is a Turborepo monorepo with Bun + React + TypeScript, Tailwind CSS, and Shadcn UI components.
 
-## Project Structure & Module Organization
+## Monorepo Structure (Turborepo)
 
-- `src/index.tsx` bootstraps the app via `src/index.html` and pulls shared styles from `styles/globals.css`; routing lives in `src/router.tsx` with pages under `src/pages`.
-- UI primitives and composites sit in `src/components/ui` (Radix/Shadcn); layout pieces in `src/components`. Keep new shared widgets here rather than inside feature pages.
-- Domain helpers go in `src/hooks`, `src/lib`, `src/utils`, and `src/store`. Favor the `@/` alias for imports so paths stay stable during moves.
-- Tests are co-located next to components (e.g., `src/components/ui/avatar.test.tsx`) with common setup in `src/test/setup.ts`. Build artifacts land in `dist/` via `build.ts`.
+- **Workspaces**: `apps/*` and `packages/*` (Bun workspaces)
+- **Apps**:
+  - `apps/web` — React frontend (routing in `src/router.tsx`, pages in `src/pages`)
+  - `apps/api` — Bun backend API
+- **Packages**:
+  - `packages/ui` — Shadcn/Radix UI primitives and composites
+  - `packages/auth` — Shared auth logic (server + client)
+  - `packages/database` — Prisma schema and client
+  - `packages/shared` — Shared utilities
+  - `packages/config-eslint`, `config-typescript`, `config-tailwind` — Shared configs
+- **Naming**: Apps use `@repo/web`, `@repo/api`; packages use `@repo/ui`, `@repo/auth`, etc.
+- **Tests**: Co-located next to components (e.g., `.test.tsx`); build outputs in `dist/`, `build/`, or `.next/` per package
 
 ## Build, Test, and Development Commands
 
+All commands run via **Turbo** at the repo root. Use `bun run dev`, `bun run build`, etc.—not per-package scripts unless you are working inside a specific app.
+
 - **Install**: `bun install`
-- **Develop**: `bun run dev` for a hot Bun dev server from `src/index.tsx`
-- **Production run**: `bun start`
-- **Build**: `bun run build` (custom `build.ts` bundles all `src/**/*.html` to `dist`; options like `bun run build -- --outdir=dist --minify` are supported)
+- **Develop**: `bun run dev` — runs `turbo dev` (loads `.env`); starts dev servers for `apps/web` and `apps/api`
+- **Production run**: `bun start` — runs `turbo start`
+- **Build**: `bun run build` — runs `turbo build`; respects task dependencies (`^build`)
 - **Quality checks**:
-  - `bun run lint` / `bun run lint:fix` for ESLint
-  - `bun run format` / `bun run format:check` for Prettier
-- **Tests**: `bun run test`, `bun run test:watch`, or `bun run test:ui` for the Vitest UI
+  - `bun run lint` / `bun run lint:fix` — ESLint across packages
+  - `bun run format` / `bun run format:check` — Prettier (repo-wide)
+- **Tests**: `bun run test`, `bun run test:watch`, or `bun run test:ui` — Vitest via Turbo
+- **Database**:
+  - `bun run prisma:generate` — generates Prisma client
+  - `bun run db:migrate` — runs migrations in `packages/database`
+  - `bun run db:seed` — seeds DB from `packages/database`
 
 ## Coding Style & Naming Conventions
 
-- **Language**: TypeScript + React with the `@/` alias mapped to `./src`
+- **Language**: TypeScript + React; apps use the `@/` alias mapped to `./src`
 - **Components**: Use PascalCase for component files; hooks start with `use*`
+- **Shared code**: Place in `packages/ui`, `packages/shared`, or `packages/auth`; import via `@repo/` workspaces
 - **Prettier settings**: 2-space indent, semicolons, double quotes, trailing commas, 100-char width
 - **ESLint**: Enforces React hooks rules, a11y basics, and unused-var hygiene via `eslint.config.js`
 - **Type safety**: Prefer typed props and explicit returns in shared utilities
@@ -31,7 +46,7 @@ This repository is a Bun + React + TypeScript starter template using Tailwind CS
 
 ## Testing Guidelines
 
-- **Stack**: Vitest + jsdom + Testing Library; DOM mocks live in `src/test/setup.ts`
+- **Stack**: Vitest + jsdom + Testing Library; setup in `packages/ui/vitest.setup.ts` and `packages/ui/vitest.config.ts`
 - **File naming**: Co-locate component/unit specs using `.test.tsx` filenames
 - **Patterns**: Use `screen` and `userEvent` patterns for readability
 - **Coverage**: Cover new stories' happy paths plus edge states (loading/empty/error) and accessible roles/labels
@@ -47,6 +62,7 @@ This repository is a Bun + React + TypeScript starter template using Tailwind CS
 
 ## Technology Stack
 
+- **Monorepo**: Turborepo v2 with Bun workspaces
 - **Runtime**: Bun v1.3.0+
 - **Framework**: React 19
 - **Routing**: React Router DOM v7
@@ -54,7 +70,7 @@ This repository is a Bun + React + TypeScript starter template using Tailwind CS
 - **UI Components**: Radix UI + Shadcn UI
 - **Forms**: React Hook Form + Zod
 - **Testing**: Vitest + Testing Library
-- **Build**: Custom build script (`build.ts`)
+- **Build**: Turbo orchestrates builds; `apps/web` uses custom `build.ts`; `apps/api` uses Bun directly
 
 ## Key Dependencies
 

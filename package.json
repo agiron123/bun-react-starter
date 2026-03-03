@@ -9,7 +9,7 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "turbo dev",
+    "dev": "bun run --env-file=.env turbo dev",
     "start": "turbo start",
     "build": "turbo build",
     "lint": "turbo lint",

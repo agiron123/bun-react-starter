@@ -1,13 +1,33 @@
+import { join, resolve } from "path";
 import { serve } from "bun";
-import index from "../../web/dist/index.html";
 import prisma from "@repo/database";
 import { createAuthToken, hashPassword, verifyPassword } from "@repo/auth/server";
 import { authenticateRequest, UnauthorizedError } from "@repo/auth/middleware";
 
+const port = Number.parseInt(process.env.PORT ?? "3000", 10);
+
+const DIST_DIR = resolve(import.meta.dir, "../../web/dist");
+
+async function serveStaticOrIndex(req: Request): Promise<Response> {
+  const pathname = new URL(req.url).pathname;
+  const filePath = join(DIST_DIR, pathname.replace(/^\//, ""));
+  const resolvedPath = resolve(filePath);
+  if (!resolvedPath.startsWith(DIST_DIR)) {
+    return new Response(Bun.file(join(DIST_DIR, "index.html")));
+  }
+  const file = Bun.file(resolvedPath);
+  if (await file.exists()) {
+    return new Response(file);
+  }
+  return new Response(Bun.file(join(DIST_DIR, "index.html")));
+}
+
 const server = serve({
+  port: Number.isNaN(port) ? 3000 : port,
+  hostname: "0.0.0.0",
   routes: {
-    // Serve index.html for all unmatched routes.
-    "/*": index,
+    // Serve static assets from dist, fallback to index.html for SPA routes
+    "/*": serveStaticOrIndex,
 
     "/api/hello": {
       async GET(_req) {

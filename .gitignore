@@ -31,6 +31,9 @@ dev.db
 .env.production.local
 .env.local
 
+# Turborepo
+.turbo
+
 # caches
 .eslintcache
 .cache
