@@ -9,6 +9,7 @@
     "./client": "./src/client.tsx"
   },
   "scripts": {
+    "typecheck": "tsc --noEmit --pretty false",
     "lint": "bunx eslint ."
   },
   "dependencies": {
@@ -23,6 +24,6 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/bun": "latest",
     "@types/react": "^19",
-    "typescript": "^5.9.3"
+    "typescript": "^7.0.2"
   }
 }

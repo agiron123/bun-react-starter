@@ -29,7 +29,10 @@ export function verifyPassword(password: string, hash: string): Promise<boolean>
   return bcrypt.compare(password, hash);
 }
 
-export function createAuthToken(payload: AuthTokenPayload, expiresIn = "7d"): string {
+export function createAuthToken(
+  payload: AuthTokenPayload,
+  expiresIn: jwt.SignOptions["expiresIn"] = "7d"
+): string {
   return jwt.sign(payload, secret, { expiresIn });
 }
 

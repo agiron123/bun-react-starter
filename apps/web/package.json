@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "bun run build.ts",
+    "typecheck": "tsc --noEmit --pretty false",
     "lint": "bunx eslint src build.ts",
     "test": "vitest run",
     "test:watch": "vitest"
@@ -30,7 +31,7 @@
     "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^5.1.0",
     "jsdom": "^27.1.0",
-    "typescript": "^5.9.3",
+    "typescript": "^7.0.2",
     "vitest": "^4.0.6"
   }
 }

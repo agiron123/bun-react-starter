@@ -1,11 +1,10 @@
 import globals from "globals";
-import tseslint from "typescript-eslint";
 import reactPlugin from "eslint-plugin-react";
 import reactHooksPlugin from "eslint-plugin-react-hooks";
 import jsxA11yPlugin from "eslint-plugin-jsx-a11y";
 import baseConfig from "./base.js";
 
-export default tseslint.config(
+export default [
   ...baseConfig,
   {
     files: ["**/*.{ts,tsx,js,jsx}"],
@@ -35,4 +34,4 @@ export default tseslint.config(
       "react-hooks/exhaustive-deps": "warn",
     },
   },
-);
+];

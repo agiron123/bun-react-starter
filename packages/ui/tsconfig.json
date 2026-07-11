@@ -1,11 +1,10 @@
 {
   "extends": "@repo/config-typescript/react.json",
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "vitest.setup.ts"],
   "exclude": ["dist", "node_modules"]
 }

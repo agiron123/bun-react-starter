@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "skills": {
+    "shadcn-ui": {
+      "source": "existential-birds/beagle",
+      "sourceType": "github",
+      "skillPath": "plugins/beagle-react/skills/shadcn-ui/SKILL.md",
+      "computedHash": "2195563ea2968fd307797bb52fd19dadd4cbf6cb7e1f1a7b93a2d43ceefbe5d0"
+    },
+    "vercel-react-best-practices": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/react-best-practices/SKILL.md",
+      "computedHash": "ca7b0c0c6e5f2750043f7f0cd72d16ac4e2abc48f9b5500d047a4b77a2506212"
+    },
+    "vitest-testing": {
+      "source": "oakoss/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/vitest-testing/SKILL.md",
+      "computedHash": "1f224f10f9193d729a0ce2746a6afaadcb00b264420c56a64fa16451d059a02c"
+    }
+  }
+}
