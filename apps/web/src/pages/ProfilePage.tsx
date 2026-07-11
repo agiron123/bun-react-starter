@@ -8,12 +8,12 @@ import { Avatar, AvatarFallback } from "@repo/ui/avatar";
 import { format } from "date-fns";
 
 function getInitials(email: string): string {
-  const local = email.split("@")[0];
+  const local = email.split("@")[0] ?? email;
   if (local.includes(".")) {
     return local
       .split(".")
       .slice(0, 2)
-      .map((s) => s[0])
+      .map((s) => s[0] ?? "")
       .join("")
       .toUpperCase();
   }

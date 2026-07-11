@@ -4,9 +4,6 @@
     { "path": "./apps/api" },
     { "path": "./apps/web" },
     { "path": "./packages/auth" },
-    { "path": "./packages/config-eslint" },
-    { "path": "./packages/config-tailwind" },
-    { "path": "./packages/config-typescript" },
     { "path": "./packages/database" },
     { "path": "./packages/shared" },
     { "path": "./packages/ui" }

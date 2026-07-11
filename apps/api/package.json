@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "bun --hot src/index.tsx",
     "start": "NODE_ENV=production bun src/index.tsx",
+    "typecheck": "tsc --noEmit --pretty false",
     "lint": "bunx eslint ."
   },
   "dependencies": {
@@ -15,6 +16,6 @@
   "devDependencies": {
     "@repo/config-typescript": "workspace:*",
     "@types/bun": "latest",
-    "typescript": "^5.9.3"
+    "typescript": "^7.0.2"
   }
 }

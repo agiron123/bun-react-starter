@@ -1,21 +1,31 @@
 import js from "@eslint/js";
+import babelParser from "@babel/eslint-parser";
 import globals from "globals";
-import tseslint from "typescript-eslint";
 import reactPlugin from "eslint-plugin-react";
 import reactHooksPlugin from "eslint-plugin-react-hooks";
 import jsxA11yPlugin from "eslint-plugin-jsx-a11y";
 import prettierConfig from "eslint-config-prettier";
 
-export default tseslint.config(
+const parserOptions = {
+  requireConfigFile: false,
+  babelOptions: {
+    plugins: [
+      ["@babel/plugin-syntax-typescript", { allExtensions: true, isTSX: true }],
+      "@babel/plugin-syntax-jsx",
+    ],
+  },
+};
+
+export default [
   {
     ignores: ["**/dist/**", "dist", "bun.lockb", "eslint.config.js", "prettier.config.js", "**/*.d.ts"],
   },
   js.configs.recommended,
-  ...tseslint.configs.recommended,
-  ...tseslint.configs.stylistic,
   {
     files: ["**/*.{ts,tsx,js,jsx}"],
     languageOptions: {
+      parser: babelParser,
+      parserOptions,
       globals: {
         ...globals.browser,
         ...globals.node,
@@ -39,14 +49,18 @@ export default tseslint.config(
       "react/jsx-key": ["error", { checkFragmentShorthand: true }],
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "warn",
-      "@typescript-eslint/no-explicit-any": "off",
-      "@typescript-eslint/consistent-indexed-object-style": "off",
-      "@typescript-eslint/no-unused-vars": [
+      "no-unused-vars": [
         "warn",
         { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
       ],
       "no-constant-binary-expression": "off",
     },
   },
+  {
+    files: ["**/*.{ts,tsx}"],
+    rules: {
+      "no-undef": "off",
+    },
+  },
   prettierConfig,
-);
+];

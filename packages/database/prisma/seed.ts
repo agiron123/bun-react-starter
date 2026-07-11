@@ -1,7 +1,12 @@
 import { PrismaClient } from "@prisma/client";
-import { hashPassword } from "../src/lib/auth";
+import * as bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
+
+async function hashPassword(password: string): Promise<string> {
+  const salt = await bcrypt.genSalt(10);
+  return bcrypt.hash(password, salt);
+}
 
 async function main() {
   const email = "test@example.com";

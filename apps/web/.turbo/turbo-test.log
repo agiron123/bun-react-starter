@@ -1,5 +1,6 @@
-$ vitest run
 
+[0m[2m[35m$[0m [2m[1mvitest run[0m
+[?25l
 [1m[46m RUN [49m[22m [36mv4.0.6 [39m[90m/Users/andre/Documents/Code/bun-react-starter/apps/web[39m
 
 No test files found, exiting with code 0
@@ -7,3 +8,4 @@ No test files found, exiting with code 0
 [2minclude: [22m[33m**/*.{test,spec}.?(c|m)[jt]s?(x)[39m
 [2mexclude:  [22m[33m**/node_modules/**[2m, [22m**/.git/**[39m
 
+[?25h

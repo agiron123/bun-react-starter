@@ -2,13 +2,11 @@ import { vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 
 // jsdom does not include ResizeObserver (used by Radix Slider, Tooltip, input-otp, etc.)
-/* eslint-disable @typescript-eslint/no-empty-function */
 class ResizeObserverMock {
   observe() {}
   unobserve() {}
   disconnect() {}
 }
-/* eslint-enable @typescript-eslint/no-empty-function */
 global.ResizeObserver = ResizeObserverMock as typeof ResizeObserver;
 
 // jsdom does not include scrollIntoView (used by cmdk)

@@ -1,32 +1,46 @@
 import js from "@eslint/js";
+import babelParser from "@babel/eslint-parser";
 import globals from "globals";
-import tseslint from "typescript-eslint";
 import prettierConfig from "eslint-config-prettier";
 
-export default tseslint.config(
+const parserOptions = {
+  requireConfigFile: false,
+  babelOptions: {
+    plugins: [
+      ["@babel/plugin-syntax-typescript", { allExtensions: true, isTSX: true }],
+      "@babel/plugin-syntax-jsx",
+    ],
+  },
+};
+
+export default [
   {
     ignores: ["dist", "build", "node_modules", "bun.lockb", "**/*.d.ts"],
   },
   js.configs.recommended,
-  ...tseslint.configs.recommended,
-  ...tseslint.configs.stylistic,
   {
     files: ["**/*.{ts,tsx,js,jsx}"],
     languageOptions: {
+      parser: babelParser,
+      parserOptions,
       globals: {
         ...globals.node,
         Bun: true,
       },
     },
     rules: {
-      "@typescript-eslint/no-explicit-any": "off",
-      "@typescript-eslint/consistent-indexed-object-style": "off",
-      "@typescript-eslint/no-unused-vars": [
+      "no-unused-vars": [
         "warn",
         { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
       ],
       "no-constant-binary-expression": "off",
     },
   },
+  {
+    files: ["**/*.{ts,tsx}"],
+    rules: {
+      "no-undef": "off",
+    },
+  },
   prettierConfig,
-);
+];

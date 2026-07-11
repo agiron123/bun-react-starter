@@ -9,13 +9,13 @@
 ┌───┬────────────────────────────┬─────────────┬───────────┐
 │ [0m[1m [0m │ [0m[1mFile[0m                       │ [0m[1mType[0m        │ [0m[1mSize[0m      │
 ├───┼────────────────────────────┼─────────────┼───────────┤
-│ 0 │ dist/chunk-3gnat42d.js     │ entry-point │ 751.10 KB │
+│ 0 │ dist/chunk-34exksc7.js     │ entry-point │ 751.11 KB │
 │ 1 │ dist/index.html            │ entry-point │ 451.00 B  │
 │ 2 │ dist/chunk-bgedw869.css    │ asset       │ 97.28 KB  │
-│ 3 │ dist/chunk-3gnat42d.js.map │ sourcemap   │ 3.13 MB   │
+│ 3 │ dist/chunk-34exksc7.js.map │ sourcemap   │ 3.13 MB   │
 │ 4 │ dist/logo-kygw735p.svg     │ asset       │ 3.85 KB   │
 │ 5 │ dist/react-c5c0zhye.svg    │ asset       │ 338.00 B  │
 └───┴────────────────────────────┴─────────────┴───────────┘
 
-✅ Build completed in 566.32ms
+✅ Build completed in 410.61ms
 

@@ -7,6 +7,7 @@
     "./utils": "./src/utils.ts"
   },
   "scripts": {
+    "typecheck": "tsc --noEmit --pretty false",
     "lint": "bunx eslint .",
     "test": "vitest run",
     "test:watch": "vitest"
@@ -19,7 +20,7 @@
     "@repo/config-typescript": "workspace:*",
     "@testing-library/jest-dom": "^6.9.1",
     "@types/bun": "latest",
-    "typescript": "^5.9.3",
+    "typescript": "^7.0.2",
     "vitest": "^4.0.6"
   }
 }
