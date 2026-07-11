@@ -6,7 +6,7 @@
       "outputs": ["dist/**", "build/**", ".next/**", "!.next/cache/**"]
     },
     "typecheck": {
-      "dependsOn": ["^typecheck"],
+      "dependsOn": ["prisma:generate", "^prisma:generate", "^typecheck"],
       "outputs": []
     },
     "dev": {

@@ -1,5 +1,4 @@
-import type { User } from "@prisma/client";
-import prisma from "@repo/database";
+import prisma, { type User } from "@repo/database";
 import { getTokenFromRequest, verifyAuthToken } from "./server";
 
 export class UnauthorizedError extends Error {
