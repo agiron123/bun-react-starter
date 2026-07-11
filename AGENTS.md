@@ -1,32 +1,85 @@
 # Repository Guidelines
 
+Turborepo monorepo with Bun workspaces: React 19 frontend, Bun API, Prisma (SQLite), Tailwind v4, and Shadcn/Radix UI.
+
 ## Project Structure & Module Organization
-- `src/index.tsx` bootstraps the app via `src/index.html` and pulls shared styles from `styles/globals.css`; routing lives in `src/router.tsx` with pages under `src/pages`.
-- UI primitives and composites sit in `src/components/ui` (Radix/Shadcn); layout pieces in `src/components`. Keep new shared widgets here rather than inside feature pages.
-- Domain helpers go in `src/hooks`, `src/lib`, `src/utils`, and `src/store`. Favor the `@/` alias for imports so paths stay stable during moves.
-- Tests are co-located next to components (e.g., `src/components/ui/avatar.test.tsx`) with common setup in `src/test/setup.ts`. Build artifacts land in `dist/` via `build.ts`.
+
+- **Workspaces**: `apps/*` and `packages/*`
+- **Apps**:
+  - `apps/web` — React frontend (`src/router.tsx`, pages in `src/pages`, feature components in `src/components`)
+  - `apps/api` — Bun `Bun.serve()` API + production static serving of `apps/web/dist`
+- **Packages**:
+  - `packages/ui` — Shadcn/Radix primitives; import as `@repo/ui/<component>`
+  - `packages/auth` — Auth helpers (`@repo/auth/server`, `@repo/auth/middleware`, `@repo/auth/client`)
+  - `packages/database` — Prisma schema/client (`@repo/database`); canonical schema is `packages/database/prisma/schema.prisma`
+  - `packages/shared` — Shared utilities (e.g. `cn`)
+  - `packages/config-*` — Shared ESLint, TypeScript, and Tailwind configs
+- Prefer `@/` inside an app’s `src`, and `@repo/<pkg>` across workspaces.
+- Co-locate tests next to source (e.g. `button.test.tsx`). Build outputs land in `dist/` / `build/`.
 
 ## Build, Test, and Development Commands
-- Install: `bun install`.
-- Develop: `bun run dev` for a hot Bun dev server from `src/index.tsx`.
-- Production run: `bun start`.
-- Build: `bun run build` (custom `build.ts` bundles all `src/**/*.html` to `dist`; options like `bun run build -- --outdir=dist --minify` are supported).
-- Quality: `bun run lint` / `bun run lint:fix`, `bun run format` / `bun run format:check`.
-- Tests: `bun run test`, `bun run test:watch`, or `bun run test:ui` for the Vitest UI.
+
+Run from the repo root via Turbo + Bun (not npm/pnpm/yarn).
+
+| Command | Purpose |
+| --- | --- |
+| `bun install` | Install workspaces |
+| `bun run dev` | `turbo dev` (loads `.env`); web + api |
+| `bun start` | Production start via Turbo |
+| `bun run build` | Turbo build (`^build` deps) |
+| `bun run typecheck` | Typecheck all packages |
+| `bun run lint` / `lint:fix` | ESLint across packages |
+| `bun run format` / `format:check` | Prettier repo-wide |
+| `bun run test` / `test:watch` / `test:ui` | Vitest via Turbo |
+| `bun run prisma:generate` | Generate Prisma client |
+| `bun run db:migrate` | Migrate (`packages/database`) |
+| `bun run db:seed` | Seed DB |
+
+Docker hot-reload: `docker compose -f docker-compose.dev.yml up --build` → `http://localhost:3000`.
 
 ## Coding Style & Naming Conventions
-- TypeScript + React with the `@/` alias mapped to `./src`. Keep component files PascalCase; hooks start with `use*`.
-- Prettier is source of truth: 2-space indent, semicolons, double quotes, trailing commas, 100-char width.
-- ESLint (`eslint.config.js`) enforces React hooks rules, a11y basics, and unused-var hygiene; keep new rules local if experimental.
-- Prefer typed props and explicit returns in shared utilities; keep Tailwind classes in JSX and theme tokens in `styles/globals.css`.
+
+- TypeScript + React. Components: PascalCase. Hooks: `use*`.
+- Prettier: 2-space indent, semicolons, double quotes, trailing commas, 100-char width.
+- ESLint: React hooks, a11y, unused-var hygiene.
+- Typed props and explicit returns in shared utilities.
+- Tailwind in JSX; theme tokens in shared/global CSS (not one-off hex in components).
+- Package manager/runtime: **Bun**. Tests in this repo: **Vitest** via `bun run test` (not `bun test` / jest).
 
 ## Testing Guidelines
-- Vitest + jsdom + Testing Library; DOM mocks live in `src/test/setup.ts`.
-- Co-locate component/unit specs using `.test.tsx` filenames; use `screen` and `userEvent` patterns for readability.
-- Cover new stories’ happy paths plus edge states (loading/empty/error) and accessible roles/labels. Snapshot only for stable UI primitives.
-- Run `bun run test` (and `bun run lint`) before opening a PR.
+
+- Vitest + jsdom + Testing Library; UI setup in `packages/ui/vitest.setup.ts`.
+- Co-locate `.test.tsx` / `.test.ts`; prefer `screen` + `userEvent`.
+- Cover happy path plus loading/empty/error and accessible roles/labels.
+- Snapshot only stable UI primitives.
+- Before a PR: `bun run test` and `bun run lint`.
 
 ## Commit & Pull Request Guidelines
-- Commit subjects should be concise and imperative (e.g., `Add accordion variants`, `Fix panel resize bug`); avoid bundling unrelated changes.
-- PRs should include a short summary, commands/tests run, linked issue or ticket, and before/after screenshots for UI changes.
-- Call out new dependencies or config changes in the description. Keep branches rebased; avoid force-pushing over collaborative work without notice.
+
+- Concise imperative subjects (e.g. `Add accordion variants`, `Fix panel resize bug`); no unrelated bundling.
+- PRs: short summary, commands/tests run, linked issue, UI screenshots when relevant.
+- Call out new deps or config changes. Rebase; avoid force-push on shared branches without notice.
+
+## Agent Skills
+
+### Project skills (`.cursor/skills/`)
+
+Read the matching `SKILL.md` before that work:
+
+| Skill | Use when |
+| --- | --- |
+| `add-shadcn-component` | Adding or updating Shadcn UI in `packages/ui` |
+| `prisma-database` | Schema, migrate, generate, or seed |
+| `add-api-route` | New/changed `Bun.serve` routes in `apps/api` |
+| `write-component-test` | Vitest + Testing Library specs for this repo |
+| `add-web-page` | New React Router page in `apps/web` |
+
+### Installed ecosystem skills (`.agents/skills/`)
+
+| Skill | Use when |
+| --- | --- |
+| `vercel-react-best-practices` | React performance / composition reviews |
+| `shadcn-ui` | General Shadcn patterns (prefer project `add-shadcn-component` for this monorepo’s `packages/ui` layout) |
+| `vitest-testing` | Broader Vitest guidance (prefer project `write-component-test` for co-location conventions) |
+
+Also use the Shadcn MCP (`shadcn`) when searching/adding registry components.
