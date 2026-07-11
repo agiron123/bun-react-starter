@@ -46,6 +46,11 @@ dev.db
 *.swo
 *~
 
+# Local agent tool settings (permissions, personal prefs)
+.claude/settings.local.json
+.claude/settings.json
+.cursor/settings.json
+
 # OS
 .DS_Store
 Thumbs.db

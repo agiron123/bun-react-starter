@@ -1,5 +1,7 @@
 # Repository Guidelines
 
+Single source of truth for coding agents (Cursor, Claude Code, Copilot, Codex, and others). Tool-specific paths (`CLAUDE.md`, `.github/copilot-instructions.md`) symlink here — edit **this file only**.
+
 Turborepo monorepo with Bun workspaces: React 19 frontend, Bun API, Prisma (SQLite), Tailwind v4, and Shadcn/Radix UI.
 
 ## Project Structure & Module Organization
@@ -27,7 +29,7 @@ Run from the repo root via Turbo + Bun (not npm/pnpm/yarn).
 | `bun run dev` | `turbo dev` (loads `.env`); web + api |
 | `bun start` | Production start via Turbo |
 | `bun run build` | Turbo build (`^build` deps) |
-| `bun run typecheck` | Typecheck all packages |
+| `bun run typecheck` | Typecheck all packages (runs `prisma:generate` first) |
 | `bun run lint` / `lint:fix` | ESLint across packages |
 | `bun run format` / `format:check` | Prettier repo-wide |
 | `bun run test` / `test:watch` / `test:ui` | Vitest via Turbo |
@@ -37,6 +39,19 @@ Run from the repo root via Turbo + Bun (not npm/pnpm/yarn).
 
 Docker hot-reload: `docker compose -f docker-compose.dev.yml up --build` → `http://localhost:3000`.
 
+## Bun Conventions
+
+Prefer Bun over Node/npm/pnpm/yarn/vite for this repo.
+
+- `bun <file>` instead of `node` / `ts-node`
+- `bun install` / `bun run <script>` for packages and scripts
+- `Bun.serve()` for HTTP/WebSocket routes in `apps/api` — not Express/Fastify/Hono
+- Prefer `Bun.file` over `node:fs` readFile/writeFile when working in Bun server code
+- Bun loads `.env` automatically — avoid adding dotenv for Bun-run processes
+- Frontend: HTML imports + Bun bundler in `apps/web` (not Vite)
+
+**Tests:** This monorepo uses **Vitest** via `bun run test` / Turbo — not `bun test` / `bun:test` / Jest.
+
 ## Coding Style & Naming Conventions
 
 - TypeScript + React. Components: PascalCase. Hooks: `use*`.
@@ -44,7 +59,6 @@ Docker hot-reload: `docker compose -f docker-compose.dev.yml up --build` → `ht
 - ESLint: React hooks, a11y, unused-var hygiene.
 - Typed props and explicit returns in shared utilities.
 - Tailwind in JSX; theme tokens in shared/global CSS (not one-off hex in components).
-- Package manager/runtime: **Bun**. Tests in this repo: **Vitest** via `bun run test` (not `bun test` / jest).
 
 ## Testing Guidelines
 
@@ -62,7 +76,7 @@ Docker hot-reload: `docker compose -f docker-compose.dev.yml up --build` → `ht
 
 ## Agent Skills
 
-### Project skills (`.cursor/skills/`)
+All skills live in **`.agents/skills/`** (agent-agnostic). `.cursor/skills` is a symlink there.
 
 Read the matching `SKILL.md` before that work:
 
@@ -73,13 +87,20 @@ Read the matching `SKILL.md` before that work:
 | `add-api-route` | New/changed `Bun.serve` routes in `apps/api` |
 | `write-component-test` | Vitest + Testing Library specs for this repo |
 | `add-web-page` | New React Router page in `apps/web` |
-
-### Installed ecosystem skills (`.agents/skills/`)
-
-| Skill | Use when |
-| --- | --- |
 | `vercel-react-best-practices` | React performance / composition reviews |
-| `shadcn-ui` | General Shadcn patterns (prefer project `add-shadcn-component` for this monorepo’s `packages/ui` layout) |
-| `vitest-testing` | Broader Vitest guidance (prefer project `write-component-test` for co-location conventions) |
+| `shadcn-ui` | General Shadcn patterns (prefer `add-shadcn-component` for this monorepo’s layout) |
+| `vitest-testing` | Broader Vitest guidance (prefer `write-component-test` for co-location) |
 
 Also use the Shadcn MCP (`shadcn`) when searching/adding registry components.
+
+## Agent Config Layout
+
+| Path | Role |
+| --- | --- |
+| `AGENTS.md` | Canonical instructions (edit this) |
+| `CLAUDE.md` | Symlink → `AGENTS.md` |
+| `.github/copilot-instructions.md` | Symlink → `AGENTS.md` |
+| `.agents/skills/` | All skills (project + ecosystem) |
+| `.cursor/skills` | Symlink → `.agents/skills` |
+| `.cursor/mcp.json` | Cursor MCP servers |
+| `.cursor/rules/` | Cursor-only shims; do not duplicate guidelines here |
