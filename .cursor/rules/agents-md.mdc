@@ -1,8 +1,0 @@
----
-description: Follow root AGENTS.md — canonical agent guidelines for this repo.
-alwaysApply: true
----
-
-Follow [AGENTS.md](../../AGENTS.md) for all project conventions (structure, Bun, Vitest, Prisma, skills).
-
-Do not invent parallel Cursor-only guidelines that duplicate or contradict `AGENTS.md`. Skills live in `.agents/skills/` (this repo’s `.cursor/skills` is a symlink there).

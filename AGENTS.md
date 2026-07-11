@@ -76,9 +76,7 @@ Prefer Bun over Node/npm/pnpm/yarn/vite for this repo.
 
 ## Agent Skills
 
-All skills live in **`.agents/skills/`** (agent-agnostic). `.cursor/skills` is a symlink there.
-
-Read the matching `SKILL.md` before that work:
+All skills live in **`.agents/skills/`** (agent-agnostic). Read the matching `SKILL.md` before that work:
 
 | Skill | Use when |
 | --- | --- |
@@ -101,6 +99,4 @@ Also use the Shadcn MCP (`shadcn`) when searching/adding registry components.
 | `CLAUDE.md` | Symlink → `AGENTS.md` |
 | `.github/copilot-instructions.md` | Symlink → `AGENTS.md` |
 | `.agents/skills/` | All skills (project + ecosystem) |
-| `.cursor/skills` | Symlink → `.agents/skills` |
-| `.cursor/mcp.json` | Cursor MCP servers |
-| `.cursor/rules/` | Cursor-only shims; do not duplicate guidelines here |
+| `.cursor/mcp.json` | Cursor-only MCP servers (tool-specific; not portable) |
